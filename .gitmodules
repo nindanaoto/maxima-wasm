@@ -4,3 +4,6 @@
 [submodule "emsdk"]
 	path = emsdk
 	url = https://github.com/emscripten-core/emsdk.git
+[submodule "ecl"]
+	path = ecl
+	url = https://gitlab.com/embeddable-common-lisp/ecl.git
