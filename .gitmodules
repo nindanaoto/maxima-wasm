@@ -1,0 +1,6 @@
+[submodule "maxima-code"]
+	path = maxima-code
+	url = https://git.code.sf.net/p/maxima/code
+[submodule "emsdk"]
+	path = emsdk
+	url = https://github.com/emscripten-core/emsdk.git
