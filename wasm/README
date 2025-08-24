@@ -1,0 +1,55 @@
+Copied from https://gitlab.com/spaghettisalat/maxima/-/tree/emscripten-port-deployed?ref_type=heads
+
+This directory contains an implementation of a browser interface
+running Maxima client side using webassembly (built with emscripten,
+ECL, gnuplot and MathJax).
+
+To check it our, visit maxima-on-wasm.pages.dev
+
+To build the browser interface yourself, you need to download the
+emscripten SDK, ECL, gnuplot and mathjax. Change to the directory this
+README is in and type the following commands:
+
+git clone https://github.com/emscripten-core/emsdk.git
+cd emsdk
+git pull
+./emsdk install latest
+./emsdk activate latest
+export EMSDK_PATH=`pwd`
+cd ..
+
+git clone https://gitlab.com/spaghettisalat/ecl
+cd ecl
+git checkout maxima-emscripten-hacks-wip
+export ECL_SRCDIR=`pwd`
+cd ..
+
+git clone https://gitlab.com/spaghettisalat/gnuplot
+export GNUPLOT_SRCDIR=`pwd`/gnuplot
+
+git clone https://github.com/mathjax/MathJax mathjax
+
+make
+
+If everything runs successfully, the maxima-ecl-combined/ directory
+will contain the final maxima.html file alongside all other files
+needed to run Maxima. Note that for the web server, these are just
+static files. The Maxima program runs entirely on the client. To host
+your own copy, just put these files in a directory where your web
+server can find it.
+
+If you want to test your build locally, due to security features built
+into modern browsers the maxima.html file can unfortunately not be
+directly opened in a browser to run Maxima. Instead, the file has to
+be delivered by a web server with the right HTTP headers [1]. If you
+have python installed, you can start a web server locally by typing:
+
+cd maxima-ecl-combined; python3 ../webserver.py
+
+Then, you can check out the browser interface by visiting
+http://localhost:8000/maxima.html with your browser.
+
+
+[1] The HTTP headers are:
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Embedder-Policy: require-corp

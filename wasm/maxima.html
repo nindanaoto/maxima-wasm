@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Maxima</title>
+    <style>
+      .body {
+          overflow-y: auto;
+          margin-top: 3.2em;
+          padding-bottom: 2em;
+      }
+      .input {
+          width: 90%;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 0px;
+          margin-bottom: 0px;
+          padding: 2px 2px;
+          border-top-width: 0px;
+          border-right-width: 0px;
+          border-bottom-width: 0px;
+          border-left-width: 0px;
+          background-color: lightgray;
+          color: black;
+          font-family: 'Lucida Console', Monaco, monospace;
+          font-size: 1em;
+          overflow-y: visible;
+      }
+      textarea {
+          overflow-y: visible;
+          display: block;
+          resize: none;
+          word-break: break-all;
+      }
+      textarea:focus {
+          outline: none;
+      }
+      pre {
+          white-space: pre-wrap;
+          word-break: break-all;
+      }
+      .plot {
+          width: 90%;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 0px;
+          margin-bottom: 0px;
+          padding: 2px 2px;
+          border-top-width: 0px;
+          border-right-width: 0px;
+          border-bottom-width: 0px;
+          border-left-width: 0px;
+          background-color: lightgray;
+          color: black;
+          font-family: 'Lucida Console', Monaco, monospace;
+          font-size: 1em;
+      }
+      .output {
+          width: 90%;
+          overflow-y: visible;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 0px;
+          margin-bottom: 0px;
+          padding: 2px 2px;
+          border-top-width: 0px;
+          border-right-width: 0px;
+          border-bottom-width: 0px;
+          border-left-width: 0px;
+          background-color: lightgray;
+          color: black;
+          font-family: 'Lucida Console', Monaco, monospace;
+          font-size: 1em;
+          position: relative;
+      }
+      .outputTypeset {
+          padding-right: 1em;
+          overflow-x: auto;
+      }
+      .outputPlain {
+          padding-right: 1em;
+          font-size: 1rem;
+          overflow-x: auto;
+      }
+      .contextMenuWrapper {
+          position: absolute;
+          top: 0;
+          right: 0;
+      }
+      .contextMenuButton {
+          position: absolute;
+          top: 0;
+          right: 0;
+          color: black;
+          font-family: 'Lucida Console', Monaco, monospace;
+          background-color: lightgray;
+          border: none;
+          padding: 3px 3px;
+          width: 2em;
+          height: 2em;
+          background-image: radial-gradient(circle, black 0.15em, transparent 0.2em);
+          background-size: 100% 33.33%;
+          cursor: pointer;
+      }
+      .contextMenu {
+          position: absolute;
+          right: 0;
+          top: 1.3em;
+          padding: 8px;
+          z-index: 1;
+          list-style-type: none;
+          background-color: #333;
+      }
+      .contextMenuEntry {
+          color: #f2f2f2;
+          padding: 2px 2px;
+          text-decoration: none;
+          font-family: 'Lucida Console', Monaco, monospace;
+      }
+      .contextMenuEntry:hover {
+          background-color: #ddd;
+          color: black;
+      }
+      .topnav {
+          background-color: #333;
+          overflow: auto;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 2.8em;
+          font-family: 'Lucida Console', Monaco, monospace;
+          overflow: hidden;
+          z-index: 1;
+      }
+      .topnav a {
+          color: #f2f2f2;
+          text-align: center;
+          padding: 10px 16px;
+          text-decoration: none;
+          font-size: 1.1em;
+      }
+      .topnav a:hover {
+          background-color: #ddd;
+          color: black;
+      }
+      .overlay {
+          position: fixed;
+          display: none;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background-color: rgba(0,0,0,0.5);
+          z-index: 2;
+          cursor: pointer;
+      }
+      .overlay-content {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 70%;
+          background-color: lightgray;
+          color: black;
+          font-family: 'Lucida Console', Monaco, monospace;
+          padding: 10px 10px;
+          border-radius: 15px;
+          cursor: auto;
+      }
+      .switch {
+          display: inline-block;
+          height: 30px;
+          position: relative;
+          width: 56px;
+      }
+
+      .switch input {
+          display:none;
+      }
+
+      .slider {
+          background-color: #aaa;
+          bottom: 0;
+          cursor: pointer;
+          left: 0;
+          position: absolute;
+          right: 0;
+          top: 0;
+          transition: .4s;
+      }
+
+      .slider:before {
+          background-color: #fff;
+          bottom: 4px;
+          content: "";
+          height: 23px;
+          left: 4px;
+          position: absolute;
+          transition: .4s;
+          width: 23px;
+      }
+
+      input:checked + .slider {
+          background-color: #1b1c36;
+      }
+
+      input:checked + .slider:before {
+          transform: translateX(23px);
+      }
+
+      .slider.round {
+          border-radius: 30px;
+      }
+
+      .slider.round:before {
+          border-radius: 50%;
+      }
+      .preferences {
+          width: 90%;
+          display: grid;
+          grid-gap: 2em;
+          grid-template-columns: 1fr 1fr;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topnav">
+      <a href="doc/html/index.html" target="_blank" style="float:left">Documentation</a>
+      <a href="javascript:void(0)" onclick="interruptAbort()" id="abortButton" title="Abort computation" style="float:left">⏹</a>
+      <a href="javascript:void(0)" onclick="showAboutPage()" style="float:right">About</a>
+      <a href="javascript:void(0)" onclick="showPreferences()" style="float:right">Preferences</a>
+    </div>
+
+    <div id="body" class="body">
+      <textarea id="input" class="input" spellcheck="false" placeholder="Maxima is starting..."></textarea>
+    </div>
+
+    <div id="about" class="overlay" onclick="hideAboutPage()">
+      <div class="overlay-content" onclick="event.stopPropagation();">
+        <p>
+          This is <a href="https://sourceforge.net/projects/maxima/" target="_blank">Maxima</a>, a computer algebra system.
+        </p>
+        <p>
+          The browser frontend has been built by Marius Gerbershagen using <a href="https://ecl.common-lisp.dev/" target="_blank">Embeddable Common Lisp</a>, <a href="https://emscripten.org/" target="_blank">emscripten</a>, <a href="http://www.gnuplot.info/" target="_blank">gnuplot</a> and <a href="https://www.mathjax.org/" target="_blank">MathJax</a>.
+        </p>
+        <p>
+          Source code available <a href="https://gitlab.com/spaghettisalat/maxima/-/tree/emscripten-port-deployed?ref_type=heads" target="_blank">here</a>.
+        </p>
+      </div>
+    </div>
+
+    <div id="preferences" class="overlay" onclick="hidePreferences()">
+      <div class="overlay-content" onclick="event.stopPropagation();">
+        <form class="preferences">
+          Show typeset output
+          <label class="switch" for="typesetOutput">
+            <input type="checkbox" id="typesetOutput" checked="true"/>
+            <div class="slider round"></div>
+          </label>
+        </form>
+      </div>
+    </div>
+
+    <script type='text/javascript'>
+      var body = document.getElementById('body');
+      var textarea = document.getElementById('input');
+      var input_text = '';
+      var index = 0;
+      var mutexBuffer = new SharedArrayBuffer(8);
+      var mutex = new Int32Array(mutexBuffer);
+      const inputBufferLength = 1024;
+      var inputBuffer = new SharedArrayBuffer(inputBufferLength);
+      var inputBufferArray = new Uint32Array(inputBuffer);
+      var inputBufferSizeBuffer = new SharedArrayBuffer(4);
+      var inputBufferSize = new Uint32Array(inputBufferSizeBuffer);
+
+      var interrupt = 0;
+
+      textarea.value = '';
+
+      async function waitForInput() {
+          interrupt = 0;
+          setTopnavButtonReleased(document.getElementById("abortButton"));
+          return new Promise(resolve => {
+              textarea.addEventListener('input', function handleInput(event) {
+                  var text = event.target.value;
+                  if (text.length < index) {
+                      textarea.value = input_text;
+                      text = input_text;
+                  }
+                  if (text.length > index && (text[text.length-1] == '\n' || (text.length+1 - index) * 4 >= inputBufferLength)) {
+                      var endIndex = index + inputBufferLength / 4 - 1;
+                      if (text.length < endIndex) {
+                          endIndex = text.length;
+                      }
+                      var textToSend = text.substring(index, endIndex+1);
+                      for (i = 0; i < textToSend.length; i++) {
+                          var c = textToSend.codePointAt(i);
+                          inputBufferArray.set([c], i);
+                      }
+                      index = endIndex+1;
+                      inputBufferSize.set([textToSend.length], 0);
+                      Atomics.store(mutex, 0, 1);
+                      Atomics.notify(mutex, 0);
+                      resolve();
+                  }
+                  input_text = textarea.value;
+                  textarea.style.height = 'auto';
+                  textarea.style.height = (textarea.scrollHeight) + 'px';
+              });
+          })
+      }
+
+      async function handleOutput(new_output) {
+          let scrolled_to_bottom = (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight-2;
+          let old_input = document.createElement("pre");
+          old_input.className = 'input';
+          old_input.innerText = textarea.value;
+          textarea.replaceWith(old_input);
+          old_input.parentNode.insertBefore(new_output, old_input.nextSibling);
+          let new_input = document.createElement("textarea");
+          new_input.className = 'input';
+          new_input.rows = 1;
+          new_input.spellcheck = false;
+          new_input.style.height = new_input.scrollHeight + 'px';
+          new_output.parentNode.insertBefore(new_input, new_output.nextSibling);
+          textarea = new_input;
+          if (scrolled_to_bottom) {
+              // focus only if we are scrolled all the way down
+              textarea.focus();
+          }
+      }
+
+      async function setTopnavButtonPressed(button) {
+          button.style.setProperty('background-color', '#ddd');
+          button.style.setProperty('color', 'black');
+      }
+
+      async function setTopnavButtonReleased(button) {
+          button.style.setProperty('background-color', '#333');
+          button.style.setProperty('color', '#f2f2f2');
+      }
+
+      async function setMenuButtonPressed(menu_button) {
+          menu_button.style.setProperty('background-image', 'radial-gradient(circle, #f2f2f2 0.15em, transparent 0.2em)');
+          menu_button.style.setProperty('background-color', '#333');
+      }
+
+      async function setMenuButtonReleased(menu_button) {
+          menu_button.style.setProperty('background-image', 'radial-gradient(circle, black 0.15em, transparent 0.2em)');
+          menu_button.style.setProperty('background-color', 'lightgray');
+      }
+      
+      async function interruptAbort() {
+          interrupt = 1;
+          setTopnavButtonPressed(document.getElementById("abortButton"));
+      }
+
+      async function checkForInterrupt() {
+          inputBufferArray.set([interrupt], 0);
+          inputBufferSize.set([0], 0);
+          Atomics.store(mutex, 0, 1);
+          Atomics.notify(mutex, 0);
+          interrupt = 0;
+          setTopnavButtonReleased(document.getElementById("abortButton"));
+      }
+
+      let mathjax_loaded = false;
+      async function setupMathJax(callback) {
+          if (!mathjax_loaded) {
+              mathjax_loaded = true;
+              window.MathJax = {
+                  chtml: {
+                      displayAlign: 'left'
+                  },
+                  startup: {
+                      typeset: false
+                  }
+              };
+              var script = document.createElement('script');
+              script.src = 'mathjax/tex-chtml.js';
+              script.async = true;
+              script.onreadystatechange = callback;
+              script.onload = callback;
+              document.head.appendChild(script);
+          } else {
+              callback();
+          }
+      }
+
+      function hideAboutPage() {
+          document.getElementById("about").style.display = "none";
+      }
+      function showAboutPage() {
+          document.getElementById("about").style.display = "block";
+      }
+      function hidePreferences() {
+          document.getElementById("preferences").style.display = "none";
+      }
+      function showPreferences() {
+          document.getElementById("preferences").style.display = "block";
+      }
+
+      if (window.crossOriginIsolated) {
+          const maximaThread = new Worker("maxima_thread.js");
+          maximaThread.postMessage([mutexBuffer, inputBuffer, inputBufferSize]);
+
+          maximaThread.onmessage = async function handleMessageFromMaxima({data: message}) {
+              if (message.type == "waitingForInput") {
+                  waitForInput();
+              } else if (message.type == "checkForInterrupt") {
+                  checkForInterrupt();
+              } else if (message.type == "displaySVG") {
+                  let plot = document.createElement("div");
+                  plot.className = 'plot';
+                  let plot_image = document.createElement("img");
+                  plot_image.style.width = '75%';
+                  const blobData = new Blob([message.text], { type: 'image/svg+xml' });
+                  const urlToBlob = window.URL.createObjectURL(blobData);
+                  plot_image.src = urlToBlob;
+                  plot.appendChild(plot_image);
+                  handleOutput(plot);
+              } else if (message.type == "displayOutput") {
+                  let output_wrapper = document.createElement("div");
+                  output_wrapper.className = 'output';
+                  let menu_wrapper = document.createElement("div");
+                  let menu_button = document.createElement("button");
+                  menu_button.className = 'contextMenuButton';
+                  let new_output = document.createElement("div");
+                  let output_type = '';
+                  let menu = null;
+                  let dismissMenu = function () {
+                      if (menu !== null) {
+                          setMenuButtonReleased(menu_button);
+                          menu.remove();
+                          menu = null;
+                      }
+                  };
+                  let showAsTeX = function (menuSelectionEvent) {
+                      dismissMenu();
+                      output_type = 'TeX';
+                      setupMathJax(() => {
+                          MathJax.texReset();
+                          var options = MathJax.getMetricsFor(new_output);
+                          let new_output_text = document.createElement("div");
+                          new_output_text.className = 'outputTypeset';
+                          MathJax.tex2chtmlPromise(message.text[1] + ' \\qquad  ' + message.text[3], options).then(function (node) {
+                              new_output_text.appendChild(node);
+                              new_output.innerHTML = '';
+                              new_output.appendChild(new_output_text);
+                              MathJax.startup.document.clear();
+                              MathJax.startup.document.updateDocument();
+                          }).catch(function (err) {
+                              console.log(err.message);
+                              showAsPlainText(null);
+                          });
+                      });
+                  }
+                  let showAsPlainText = function (menuSelectionEvent) {
+                      dismissMenu();
+                      output_type = 'plainText';
+                      let new_output_text = document.createElement("pre");
+                      new_output_text.className = 'outputPlain';
+                      new_output_text.innerHTML = message.text[0] + ' ' + message.text[2];
+                      new_output.innerHTML = '';
+                      new_output.appendChild(new_output_text);
+                  }
+                  menu_wrapper.appendChild(menu_button);
+                  menu_button.onclick = function (e) {
+                      if (menu === null) {
+                          setMenuButtonPressed(menu_button);
+                          menu = document.createElement("ul");
+                          menu.id = 'contextMenu';
+                          menu.className = 'contextMenu';
+                          let list_item1 = document.createElement("li");
+                          let menu_item1 = document.createElement("a");
+                          menu_item1.className = 'contextMenuEntry';
+                          if (output_type == 'plainText') {
+                              menu_item1.innerText = 'Show typeset output';
+                              menu_item1.addEventListener("click", showAsTeX);
+                          } else {
+                              menu_item1.innerText = 'Show as plain text';
+                              menu_item1.addEventListener("click", showAsPlainText);
+                          }
+                          list_item1.appendChild(menu_item1);
+                          let list_item2 = document.createElement("li");
+                          let menu_item2 = document.createElement("a");
+                          menu_item2.className = 'contextMenuEntry';
+                          menu_item2.innerText = 'Copy';
+                          menu_item2.addEventListener("click", (menuSelectionEvent) => {
+                              dismissMenu();
+                              navigator.clipboard.writeText(message.text[2]);
+                          });
+                          list_item2.appendChild(menu_item2);
+                          let list_item3 = document.createElement("li");
+                          let menu_item3 = document.createElement("a");
+                          menu_item3.className = 'contextMenuEntry';
+                          menu_item3.innerText = 'Copy as TeX';
+                          menu_item3.addEventListener("click", (menuSelectionEvent) => {
+                              dismissMenu();
+                              navigator.clipboard.writeText(message.text[3]);
+                          });
+                          list_item3.appendChild(menu_item3);
+                          menu.appendChild(list_item1);
+                          menu.appendChild(list_item2);
+                          menu.appendChild(list_item3);
+                          menu_wrapper.appendChild(menu);
+                      } else {
+                          dismissMenu();
+                      }
+                  };
+                  output_wrapper.appendChild(menu_wrapper);
+                  output_wrapper.appendChild(new_output);
+                  if (document.getElementById('typesetOutput').checked) {
+                      showAsTeX(null);
+                  } else {
+                      showAsPlainText(null);
+                  }
+                  handleOutput(output_wrapper);
+              } else {
+                  let text = message.text;
+                  if (textarea.value.length == 0 && text.charAt(0) == '\n')
+                      text = text.substring(1);
+                  let scrolled_to_bottom = (window.innerHeight + window.pageYOffset) >= document.body.offsetHeight-2;
+                  textarea.value += text;
+                  index = textarea.value.length;
+                  input_text = textarea.value;
+                  textarea.style.height = 'auto';
+                  textarea.style.height = (textarea.scrollHeight) + 'px';
+                  if (scrolled_to_bottom) {
+                      // focus only if we are scrolled all the way down
+                      textarea.focus();
+                      window.scrollTo(0, document.body.scrollHeight);
+                  }
+              }
+          };
+      }
+    </script>
+  </body>
+</html>
+
+
