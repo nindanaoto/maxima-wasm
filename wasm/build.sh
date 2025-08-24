@@ -9,7 +9,7 @@ maxima_files=$(${ECL_TO_RUN} --norc --quiet \
 			     --eval "(defmethod asdf:perform ((op find-files) (c asdf:cl-source-file))
 			               (princ (namestring (asdf::component-pathname c)))
                         (princ #\Space))" \
-			     --eval "(push \"`pwd`/../src/\" asdf:*central-registry*)" \
+			     --eval "(push \"`pwd`/../maxima-code/src/\" asdf:*central-registry*)" \
 			     --eval "(asdf:operate (asdf:make-operation 'find-files) :maxima)" \
 			     --eval "(ext:quit)")
 rm -rf ${ECL_SRCDIR}/build/

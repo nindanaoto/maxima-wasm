@@ -1,0 +1,83 @@
+# Maxima-WASM Build Artifacts
+
+# WASM build outputs
+/wasm/ecl-host/
+/wasm/ecl-emscripten/
+/wasm/maxima-ecl-combined/
+/wasm/gnuplot/
+
+# ECL compiled files
+*.fas
+*.fasb
+*.o
+*.c
+*.eclh
+*.data
+*.a
+
+# WebAssembly files
+*.wasm
+*.js.mem
+
+# Shared libraries
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Build directories in submodules (maxima-code)
+/maxima-code/src/binary-ecl/
+/maxima-code/src/binary-*/
+/maxima-code/share/*/cross/
+/maxima-code/share/*/binary-*/
+
+# Temporary build files
+config.log
+config.status
+*.tmp
+*.bak
+*~
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules (if any)
+node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Build logs
+build.log
+make.log
+
+# Autotools generated files
+configure
+config.h
+config.h.in
+Makefile.in
+aclocal.m4
+autom4te.cache/
+stamp-h*
+
+# ECL specific
+*.ecl
+ecl-config
+
+# Emscripten cache
+.emscripten_cache/
+.emscripten_ports/
+
+# MathJax build artifacts (if any)
+/mathjax/es5/
+/mathjax/unpacked/

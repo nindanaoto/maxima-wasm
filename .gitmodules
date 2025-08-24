@@ -7,3 +7,9 @@
 [submodule "ecl"]
 	path = ecl
 	url = https://gitlab.com/embeddable-common-lisp/ecl.git
+[submodule "gnuplot"]
+	path = gnuplot
+	url = https://git.code.sf.net/p/gnuplot/gnuplot-main
+[submodule "mathjax"]
+	path = mathjax
+	url = https://github.com/mathjax/MathJax

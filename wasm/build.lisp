@@ -20,8 +20,8 @@
 ;; systems in the current directory.
 (asdf:initialize-output-translations
  (let* ((path (butlast (pathname-directory (ext:getcwd))))
-	(src-dir (make-pathname :defaults (ext:getcwd) :directory (append path '("src"))))
-	(share-dir (make-pathname :defaults (ext:getcwd) :directory (append path '("share")))))
+	(src-dir (make-pathname :defaults (ext:getcwd) :directory (append path '("maxima-code" "src"))))
+	(share-dir (make-pathname :defaults (ext:getcwd) :directory (append path '("maxima-code" "share"))))
    `(:output-translations
      :ignore-inherited-configuration
      :disable-cache
@@ -29,7 +29,7 @@
       ,(make-pathname :defaults (merge-pathnames "binary-ecl/**/*.*" src-dir) :version nil))
      (,(make-pathname :defaults (merge-pathnames "**/*.*" share-dir) :version nil)
       ,(make-pathname :defaults (merge-pathnames "binary-ecl/share/**/*.*" src-dir) :version nil)))))
-(push #P"../src/" asdf:*central-registry*)
+(push #P"../maxima-code/src/" asdf:*central-registry*)
 
 (defclass cross-compilation (operation)
   ((configuration :initarg :compiler-configuration :initform (error "Must supply a configuration for the cross compilation")
