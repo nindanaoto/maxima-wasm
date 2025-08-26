@@ -175,7 +175,7 @@ maxima-ecl-combined/libgnuplot.so:
 	cd ${GNUPLOT_SRCDIR}; make clean; rm -rf ${INSTALL_DIR}/gnuplot/; source ${EMSDK_PATH}/emsdk_env.sh; CFLAGS="-DLIBGNUPLOT -UREADLINE" emconfigure ./configure --without-libcerf --without-latex --without-readline --without-lua --without-tektronix --without-cairo --without-qt --disable-history-file --disable-plugins --disable-wxwidgets --without-x --without-kitty --without-gd --prefix=${INSTALL_DIR}/gnuplot && emmake $(MAKE) $(MAKEFLAGS) && emmake $(MAKE) install && cp ${INSTALL_DIR}/gnuplot/lib/libgnuplot.so.0.0.0 ${INSTALL_DIR}/maxima-ecl-combined/libgnuplot.so
 
 maxima-ecl-combined/mathjax: mathjax/es5
-	cp -r mathjax/es5 maxima-ecl-combined/mathjax
+	cp -r ../mathjax/es5 maxima-ecl-combined/mathjax
 
 maxima-ecl-combined/doc: maxima-ecl-combined/share
 	cd maxima-ecl-combined/; rm doc; ln -s `find share -name doc` .
