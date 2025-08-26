@@ -1,9 +1,9 @@
 #!/bin/bash
-git sumodule update --init --recursive
+git submodule update --init --recursive
 ./emsdk/emsdk install latest
 ./emsdk/emsdk activate latest
 cd maxima-code
-boostrap.sh
+./bootstrap
 cd ../gnuplot
 autoconf
 cd ../wasm
