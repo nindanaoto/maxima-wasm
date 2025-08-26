@@ -2,13 +2,16 @@ SHELL := /bin/bash
 
 INSTALL_DIR = $(shell pwd)
 ECL_TO_RUN = ${INSTALL_DIR}/ecl-host/bin/ecl
+EMSDK_PATH= ${INSTALL_DIR}/../emsdk
+ECL_SRCDIR= ${INSTALL_DIR}/../ecl
+GNUPLOT_SRCDIR= ${INSTALL_DIR}/../gnuplot
 
 SHARE_TARGETS = #maxima-ecl-combined/share/maxima/*/share/lapack/lapack-interface.fas maxima-ecl-combined/share/maxima/*/share/linearalgebra/linearalgebra.fas maxima-ecl-combined/share/maxima/*/share/hompack/hompack-interface.fas maxima-ecl-combined/share/maxima/*/share/odepack/dlsode-interface.fas maxima-ecl-combined/share/maxima/*/share/cobyla/cobyla-interface.fas maxima-ecl-combined/share/maxima/*/share/minpack/minpack-interface.fas maxima-ecl-combined/share/maxima/*/share/graphs/graphs.fas # maxima-ecl-combined/share/maxima/*/share/fftpack5/fftpack5-interface.fas
 
 all: maxima-ecl-combined/maxima.html maxima-ecl-combined/maxima_thread.js maxima-ecl-combined/maxima.wasm maxima-ecl-combined/libecl.so maxima-ecl-combined/maxima-slatec.fas maxima-ecl-combined/maxima-quadpack.fas maxima-ecl-combined/maxima-plot.fas maxima-ecl-combined/maxima-solve.fas maxima-ecl-combined/maxima-poisson-series.fas maxima-ecl-combined/maxima-matrix-algebra.fas maxima-ecl-combined/maxima-number-theory.fas maxima-ecl-combined/maxima-limits.fas maxima-ecl-combined/maxima-integration.fas maxima-ecl-combined/share maxima-ecl-combined/share_files.js maxima-ecl-combined/mathjax maxima-ecl-combined/doc maxima-ecl-combined/favicon.ico ${SHARE_TARGETS}
 
 maxima-ecl-combined/share: ${ECL_TO_RUN} ../maxima-code/tests/*
-	cd ../maxima-code; ./configure --with-ecl=`pwd`/../wasm/ecl-host/bin/ecl --prefix=/ && $(MAKE) && rm -rf ../wasm/maxima-ecl-combined/share && $(MAKE) DESTDIR=`pwd`/../wasm/maxima-ecl-combined/ install && rm -rf src/binary-ecl/maxima
+	cd ../maxima-code; booststrap.sh;./configure --with-ecl=`pwd`/../wasm/ecl-host/bin/ecl --prefix=/ && $(MAKE) && rm -rf ../wasm/maxima-ecl-combined/share && $(MAKE) DESTDIR=`pwd`/../wasm/maxima-ecl-combined/ install && rm -rf src/binary-ecl/maxima
 
 maxima-ecl-combined/share_files.js: maxima-ecl-combined/share ${SHARE_TARGETS}
 	rm -f maxima-ecl-combined/share_files.js
